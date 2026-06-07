@@ -1,11 +1,7 @@
 {
 	"name": "@fishenv/nets-easy",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"description": "A library for using the Nets Easy API in TypeScript.",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"type": "module",
-	"scripts": {},
 	"keywords": [
 		"nets",
 		"easy",
@@ -13,6 +9,41 @@
 		"api",
 		"typescript"
 	],
+	"homepage": "https://github.com/freshfish70/fishenv.nets-easy#readme",
+	"bugs": {
+		"url": "https://github.com/freshfish70/fishenv.nets-easy/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/freshfish70/fishenv.nets-easy.git"
+	},
+	"license": "MIT",
 	"author": "Christoffer Træen",
-	"license": "MIT"
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"directories": {
+		"example": "examples"
+	},
+	"scripts": {
+		"build": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.json",
+		"prepack": "npm run build"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"devDependencies": {
+		"typescript": "6.0.3"
+	}
 }

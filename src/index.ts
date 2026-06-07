@@ -71,11 +71,11 @@ export class NetsEasy {
 }
 
 // Re-export all public types so consumers can import from this single entry point.
-export { NON_RETRYABLE_ERROR_CODES } from "./handlers/verification-handler.ts";
-export * from "./interfaces/common.ts";
-export * from "./interfaces/options.ts";
-export * from "./interfaces/payment.ts";
-export * from "./interfaces/subscription.ts";
-export * from "./interfaces/webhook-types.ts";
-export * from "./interfaces/webhook.ts";
-export * from "./utils/webhook-utils.ts";
+export * from "./codes.js";
+export * from "./interfaces/common.js";
+export * from "./interfaces/options.js";
+export * from "./interfaces/payment.js";
+export * from "./interfaces/subscription.js";
+export * from "./interfaces/webhook-types.js";
+export * from "./interfaces/webhook.js";
+export * from "./utils/webhook-utils.js";

@@ -1,5 +1,5 @@
-import { Order } from "./common.ts";
-import { Notifications } from "./payment.ts";
+import type { Order } from "./common.ts";
+import type { Notifications } from "./payment.ts";
 
 // ---------------------------------------------------------------------------
 // Retrieve subscription — GET /v1/subscriptions/{subscriptionId}
