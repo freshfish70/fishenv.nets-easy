@@ -130,6 +130,24 @@ export interface BulkChargeSubscriptionsResponse {
 }
 
 /**
+ * Pagination options for bulk subscription charge/verification result retrieval.
+ *
+ * The API supports either:
+ * - skip + take, or
+ * - pageNumber + pageSize
+ */
+export interface BulkOperationPagination {
+  /** Number of entries to skip from the start. Use together with `take`. */
+  skip?: number;
+  /** Maximum number of entries to retrieve. Use together with `skip`. */
+  take?: number;
+  /** Page number to retrieve. Use together with `pageSize`. */
+  pageNumber?: number;
+  /** Page size to retrieve. Use together with `pageNumber`. */
+  pageSize?: number;
+}
+
+/**
  * A single result entry from GET /v1/subscriptions/charges/{bulkId}.
  */
 export interface BulkChargeResultItem {
