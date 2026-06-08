@@ -1,4 +1,7 @@
-import type { Notifications } from "../interfaces/payment.ts";
+import type {
+  Notifications,
+  WebhookHeader,
+} from "../interfaces/payment.ts";
 import type { EventName } from "../interfaces/webhook-types.ts";
 
 export const ALL_WEBHOOK_EVENT_NAMES: EventName[] = [
@@ -48,19 +51,21 @@ export const SUBSCRIPTION_CHARGE_WEBHOOK_EVENT_NAMES: EventName[] = [
  */
 export class WebhookUtils {
   /**
-   * Create a notifications object where all webhook events use the same URL
-   * and optional authorization header.
+   * Create a notifications object where all webhook events use the same URL,
+   * optional authorization header, and optional custom callback headers.
    */
   create(
     eventNames: EventName[],
     url: string,
     token?: string,
+    headers?: WebhookHeader[],
   ): Notifications {
     return {
       webHooks: eventNames.map((eventName) => ({
         eventName,
         url,
         authorization: token,
+        headers,
       })),
     };
   }
@@ -68,21 +73,29 @@ export class WebhookUtils {
   /**
    * Subscribe to all currently modelled webhook events.
    */
-  all(url: string, token?: string): Notifications {
-    return this.create(ALL_WEBHOOK_EVENT_NAMES, url, token);
+  all(url: string, token?: string, headers?: WebhookHeader[]): Notifications {
+    return this.create(ALL_WEBHOOK_EVENT_NAMES, url, token, headers);
   }
 
   /**
    * Subscribe to the full payment lifecycle.
    */
-  paymentLifecycle(url: string, token?: string): Notifications {
-    return this.create(PAYMENT_LIFECYCLE_WEBHOOK_EVENT_NAMES, url, token);
+  paymentLifecycle(
+    url: string,
+    token?: string,
+    headers?: WebhookHeader[],
+  ): Notifications {
+    return this.create(PAYMENT_LIFECYCLE_WEBHOOK_EVENT_NAMES, url, token, headers);
   }
 
   /**
    * Subscribe to recurring/subscription charge events.
    */
-  subscriptionCharge(url: string, token?: string): Notifications {
-    return this.create(SUBSCRIPTION_CHARGE_WEBHOOK_EVENT_NAMES, url, token);
+  subscriptionCharge(
+    url: string,
+    token?: string,
+    headers?: WebhookHeader[],
+  ): Notifications {
+    return this.create(SUBSCRIPTION_CHARGE_WEBHOOK_EVENT_NAMES, url, token, headers);
   }
 }

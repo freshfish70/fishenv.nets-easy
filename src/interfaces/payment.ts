@@ -12,6 +12,21 @@ import type { EventName } from "./webhook-types.ts";
 // ---------------------------------------------------------------------------
 
 /**
+ * A single custom header to include when sending the webhook callback.
+ */
+export interface WebhookHeader {
+  /**
+   * Header name.
+   */
+  key: string;
+
+  /**
+   * Header value.
+   */
+  value: string;
+}
+
+/**
  * A single webhook subscription.
  */
 export interface WebhookNotification {
@@ -30,6 +45,11 @@ export interface WebhookNotification {
    * Must be 8–64 alphanumeric characters.
    */
   authorization?: string;
+
+  /**
+   * Optional additional headers sent with the callback.
+   */
+  headers?: WebhookHeader[];
 }
 
 /**
