@@ -1,4 +1,5 @@
 import type { EventName } from "./webhook-types.ts";
+import type { WebhookHeader } from "./payment.ts";
 
 /**
  * Webhook notification configuration.
@@ -24,4 +25,9 @@ export interface WebhookConfig {
    * Must be 8–64 alphanumeric characters.
    */
   authorization?: string;
+
+  /**
+   * Optional additional headers sent with the callback.
+   */
+  headers?: WebhookHeader[];
 }

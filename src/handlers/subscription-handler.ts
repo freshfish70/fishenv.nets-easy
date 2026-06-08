@@ -3,6 +3,7 @@ import type {
   BulkChargesResponse,
   BulkChargeSubscriptionsRequest,
   BulkChargeSubscriptionsResponse,
+  BulkOperationPagination,
   BulkVerificationsResponse,
   BulkVerifySubscriptionsRequest,
   BulkVerifySubscriptionsResponse,
@@ -30,6 +31,35 @@ import { BaseHandler } from "./base-handler.ts";
  *   GET  /v1/subscriptions/verifications/{bulkId}            → getBulkVerifications()
  */
 export class SubscriptionHandler extends BaseHandler {
+  private buildBulkPaginationQuery(
+    pagination?: BulkOperationPagination,
+  ): string {
+    if (!pagination) {
+      return "";
+    }
+
+    const params = new URLSearchParams();
+
+    if (pagination.skip !== undefined) {
+      params.set("skip", String(pagination.skip));
+    }
+
+    if (pagination.take !== undefined) {
+      params.set("take", String(pagination.take));
+    }
+
+    if (pagination.pageNumber !== undefined) {
+      params.set("pageNumber", String(pagination.pageNumber));
+    }
+
+    if (pagination.pageSize !== undefined) {
+      params.set("pageSize", String(pagination.pageSize));
+    }
+
+    const query = params.toString();
+    return query ? `?${query}` : "";
+  }
+
   /**
    * Retrieves an existing subscription.
    * GET /v1/subscriptions/{subscriptionId} → 200 OK
@@ -91,11 +121,19 @@ export class SubscriptionHandler extends BaseHandler {
   /**
    * Retrieves the results of a bulk charge operation.
    * GET /v1/subscriptions/charges/{bulkId} → 200 OK
+   *
+   * Supports pagination via either `skip` + `take` or
+   * `pageNumber` + `pageSize`.
    */
-  getBulkCharges(bulkId: string): Promise<ApiResponse<BulkChargesResponse>> {
+  getBulkCharges(
+    bulkId: string,
+    pagination?: BulkOperationPagination,
+  ): Promise<ApiResponse<BulkChargesResponse>> {
     return this.request<BulkChargesResponse>(
       "GET",
-      `/subscriptions/charges/${bulkId}`,
+      `/subscriptions/charges/${bulkId}${
+        this.buildBulkPaginationQuery(pagination)
+      }`,
     );
   }
 
@@ -118,13 +156,19 @@ export class SubscriptionHandler extends BaseHandler {
   /**
    * Retrieves the results of a bulk verification operation.
    * GET /v1/subscriptions/verifications/{bulkId} → 200 OK
+   *
+   * Supports pagination via either `skip` + `take` or
+   * `pageNumber` + `pageSize`.
    */
   getBulkVerifications(
     bulkId: string,
+    pagination?: BulkOperationPagination,
   ): Promise<ApiResponse<BulkVerificationsResponse>> {
     return this.request<BulkVerificationsResponse>(
       "GET",
-      `/subscriptions/verifications/${bulkId}`,
+      `/subscriptions/verifications/${bulkId}${
+        this.buildBulkPaginationQuery(pagination)
+      }`,
     );
   }
 }

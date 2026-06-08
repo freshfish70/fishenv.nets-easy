@@ -1,5 +1,5 @@
-import { Order } from "./common.ts";
-import { Notifications } from "./payment.ts";
+import type { Order } from "./common.ts";
+import type { Notifications } from "./payment.ts";
 
 // ---------------------------------------------------------------------------
 // Retrieve subscription — GET /v1/subscriptions/{subscriptionId}
@@ -127,6 +127,24 @@ export interface BulkChargeSubscriptionsRequest {
 export interface BulkChargeSubscriptionsResponse {
   /** UUID of the bulk charge operation. Use to poll GET /v1/subscriptions/charges/{bulkId}. */
   bulkId: string;
+}
+
+/**
+ * Pagination options for bulk subscription charge/verification result retrieval.
+ *
+ * The API supports either:
+ * - skip + take, or
+ * - pageNumber + pageSize
+ */
+export interface BulkOperationPagination {
+  /** Number of entries to skip from the start. Use together with `take`. */
+  skip?: number;
+  /** Maximum number of entries to retrieve. Use together with `skip`. */
+  take?: number;
+  /** Page number to retrieve. Use together with `pageSize`. */
+  pageNumber?: number;
+  /** Page size to retrieve. Use together with `pageNumber`. */
+  pageSize?: number;
 }
 
 /**
